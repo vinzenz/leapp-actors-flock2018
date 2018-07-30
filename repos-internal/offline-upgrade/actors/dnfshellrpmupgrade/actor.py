@@ -16,7 +16,7 @@ class DnfShellRpmUpgrade(Actor):
         with NamedTemporaryFile() as script:
             script.write('\n'.join([
                 'distro-sync'
-            ]))
+            ]).encode('utf-8'))
             script.flush()
             check_call([
                 '/usr/bin/dnf',
@@ -24,6 +24,7 @@ class DnfShellRpmUpgrade(Actor):
                 '-y',
                 '-C',
                 '--repofrompath',
+                'leapprepo,https://copr-be.cloud.fedoraproject.org/results/evilissimo/leapp-flock2018/fedora-rawhide-x86_64/',
                 '--releasever', '29',
                 '--allowerasing',
                 '--nogpgcheck',

@@ -18,7 +18,7 @@ class RpmScanner(Actor):
             '-qa',
             '--queryformat',
             r'%{NAME}|%{VERSION}|%{RELEASE}|%|EPOCH?{%{EPOCH}}:{}||%|ARCH?{%{ARCH}}:{}|\n'
-        ])
+        ]).decode('utf-8')
         result = InstalledRPM()
         for entry in output.split('\n'):
             entry = entry.strip()

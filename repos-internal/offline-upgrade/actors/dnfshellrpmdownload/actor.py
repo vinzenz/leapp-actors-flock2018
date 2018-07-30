@@ -16,12 +16,14 @@ class DNFShellRPMDownload(Actor):
         with NamedTemporaryFile() as script:
             script.write('\n'.join([
                 'distro-sync --downloadonly'
-            ]))
+            ]).encode('utf-8'))
             script.flush()
             check_call([
                 '/usr/bin/dnf',
                 'shell',
                 '-y',
+                '--repofrompath',
+                'leapprepo,https://copr-be.cloud.fedoraproject.org/results/evilissimo/leapp-flock2018/fedora-rawhide-x86_64/',
                 '--releasever', '29',
                 '--allowerasing',
                 '--nogpgcheck',
