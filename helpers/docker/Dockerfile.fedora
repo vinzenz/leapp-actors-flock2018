@@ -1,0 +1,9 @@
+FROM fedora:rawhide 
+
+ADD docker-install-fedora.sh /root
+RUN /root/docker-install-fedora.sh
+ADD docker-run.sh /root
+RUN dnf clean all
+COPY marker /dev/null
+RUN dnf update -y
+RUN dnf clean all
