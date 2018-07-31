@@ -30,8 +30,11 @@ do_upgrade() {
     # NOTE: in case we would need to run leapp before pivot, we would need to
     #       specify where the root is, e.g. --root=/sysroot
     # TODO: update: systemd-nspawn
-    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/$NEWROOT/lib $NEWROOT/bin/systemd-nspawn --capability=all --bind=/sys --bind=/dev --bind=/proc --keep-unit --register=no -D $NEWROOT $LEAPPBIN upgrade --resume $args
+    LD_LIBRARY_PATH_BACKUP=$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/lib:/lib64:$NEWROOT/lib:$NEWROOT/lib64
+    $NEWROOT/bin/systemd-nspawn --capability=all --bind=/sys --bind=/dev --bind=/proc --keep-unit --register=no -D $NEWROOT $LEAPPBIN upgrade --resume $args
     rv=$?
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH_BACKUP
 
     # NOTE: THIS SHOULD BE AGAIN PART OF LEAPP IDEALLY
     ## backup old product id certificates
