@@ -36,7 +36,7 @@ do_upgrade() {
     #       specify where the root is, e.g. --root=/sysroot
     # TODO: update: systemd-nspawn
     LD_LIBRARY_PATH_BACKUP=$LD_LIBRARY_PATH
-    export LD_LIBRARY_PATH=/lib:/lib64:$NEWROOT/usr/lib:$NEWROOT/usr/lib64
+    export LD_LIBRARY_PATH=/lib:/lib64:$NEWROOT/usr/lib/systemd:$NEWROOT/usr/lib64/systemd
 
     $NSPAWN_PATH --capability=all --bind=/sys --bind=/dev --bind=/proc --keep-unit --register=no -D $NEWROOT $LEAPPBIN upgrade --resume $args
     rv=$?
