@@ -1,5 +1,6 @@
 #!/bin/bash
 # actually perform the upgrade, using UPGRADEBIN (set in /etc/conf.d)
+set -x
 
 export DRACUT_SYSTEMD=1
 if [ -f /dracut-state.sh ]; then
@@ -31,7 +32,7 @@ do_upgrade() {
     #       specify where the root is, e.g. --root=/sysroot
     # TODO: update: systemd-nspawn
     LD_LIBRARY_PATH_BACKUP=$LD_LIBRARY_PATH
-    export LD_LIBRARY_PATH=/lib:/lib64:$NEWROOT/lib:$NEWROOT/lib64
+    export LD_LIBRARY_PATH=/lib:/lib64:$NEWROOT/usr/lib:$NEWROOT/usr/lib64
     $NEWROOT/bin/systemd-nspawn --capability=all --bind=/sys --bind=/dev --bind=/proc --keep-unit --register=no -D $NEWROOT $LEAPPBIN upgrade --resume $args
     rv=$?
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH_BACKUP
