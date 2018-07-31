@@ -26,6 +26,10 @@ do_upgrade() {
         getargbool 0 enforcing || echo 0 > /sys/fs/selinux/enforce
     fi
 
+    NSPAWN_PATH=$NEWROOT/usr/bin/systemd-nspawn
+    if [ ! -x $NSPAWN_PATH ]; then
+        NSPAWN_PATH=$NEWROOT/bin/systemd-nspawn
+    fi
 
     # and off we go...
     # NOTE: in case we would need to run leapp before pivot, we would need to
@@ -33,7 +37,8 @@ do_upgrade() {
     # TODO: update: systemd-nspawn
     LD_LIBRARY_PATH_BACKUP=$LD_LIBRARY_PATH
     export LD_LIBRARY_PATH=/lib:/lib64:$NEWROOT/usr/lib:$NEWROOT/usr/lib64
-    $NEWROOT/bin/systemd-nspawn --capability=all --bind=/sys --bind=/dev --bind=/proc --keep-unit --register=no -D $NEWROOT $LEAPPBIN upgrade --resume $args
+
+    $NSPAWN_PATH --capability=all --bind=/sys --bind=/dev --bind=/proc --keep-unit --register=no -D $NEWROOT $LEAPPBIN upgrade --resume $args
     rv=$?
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH_BACKUP
 
