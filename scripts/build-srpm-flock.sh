@@ -26,18 +26,18 @@ fi
 export LEAPP_PATCHES_SINCE_RELEASE_EXTERNAL=".$(git log `git describe  --abbrev=0`..HEAD --format=oneline | wc -l)"
 echo "Patches since last release $LEAPP_PATCHES_SINCE_RELEASE_EXTERNAL"
 
-#echo "=============================================================================="
-#echo "                        RUNNING INITRD BUILD                                  "
-#echo "=============================================================================="
+echo "=============================================================================="
+echo "                        RUNNING INITRD BUILD                                  "
+echo "=============================================================================="
 
-#if [[ $LEAPP_INITRD_SKIP != 1 ]]; then
-#    helpers/docker/docker-build.sh
-#else
-#    echo SKIPPED BUILD of INITRD image
-#fi
+if [[ $LEAPP_INITRD_SKIP != 1 ]]; then
+    helpers/docker/docker-build.sh
+else
+    echo SKIPPED BUILD of INITRD image
+fi
 
-#mkdir -p repos-internal/offline-upgrade/files
-#tar xf sources/dracut/upgrade-boot-files.tgz -C repos-internal/offline-upgrade/files/
+mkdir -p repos-internal/offline-upgrade/files
+tar xf sources/dracut/upgrade-boot-files.tgz -C repos-internal/offline-upgrade/files/
 
 echo "=============================================================================="
 echo "                    GETTING UPSTREAM ACTORS REPOSITORY                        "
