@@ -20,7 +20,7 @@ class CreateInitRdBootEntry(Actor):
             '/usr/sbin/grubby',
             '--add-kernel=/boot/vmlinuz-upgrade.x86_64',
             '--initrd=/boot/initramfs-upgrade.x86_64.img',
-            '--title=RHEL Upgrade RAMDISK',
+            '--title=Fedora Upgrade RAMDISK',
             '--copy-default',
             '--make-default',
             '--args="debug enforcing=0 rd.plymouth=0 plymouth.enable=0"'
